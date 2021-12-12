@@ -2,9 +2,9 @@ package com.epam;
 
 public class CoronaDesinfector {
 
-    private Announcer announcer = new ConsoleAnnouncer();
+    private Announcer announcer = ObjectFactory.getInstance().createObject(Announcer.class);
 
-    private Policeman policeman = new PolicemanImpl();
+    private Policeman policeman = ObjectFactory.getInstance().createObject(Policeman.class);
 
     public void start(Room room) {
         announcer.announce("Все вон!");

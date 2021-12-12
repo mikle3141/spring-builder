@@ -1,5 +1,7 @@
 package com.epam;
 
+import lombok.SneakyThrows;
+
 public class ObjectFactory {
     private static ObjectFactory ourInstance = new ObjectFactory();
 
@@ -7,8 +9,14 @@ public class ObjectFactory {
 
     private ObjectFactory() {}
 
+    private Config config = new JavaConfig("com.epam");
+
+    @SneakyThrows
     public <T> T createObject(Class<T> type) {
-        //TODO
-        return null;
+        Class<? extends T> implClass = type;
+        if (type.isInterface()) {
+            implClass = config.getImplClass(type);
+        }
+        return implClass.getDeclaredConstructor().newInstance();
     }
 }
